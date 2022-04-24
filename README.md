@@ -30,7 +30,7 @@ Run "Manually Fix Text.ipynb", and copy/paste the article text into the ipywidge
 ## What about articles published before you started scraping? (**Cold Start Problem**)
 There's a table (and helper script, Manually_Add_Links.ipynb) for submitting individual URLs to "catch up" on. This injects them into a "Manually_Added_Links" table and the RSS_Hits table, gives them a UUID, and kicks off further processing.
 
-![image](https://user-images.githubusercontent.com/36832027/164998875-3173866a-aa83-4fd3-9cf4-df83506b0774.png)
+![image](https://user-images.githubusercontent.com/36832027/165001863-72cbbec2-853b-4da2-bb0f-080d825130b9.png)
 
 ## So what do I do with this database?
 The longer this thing runs and scrapes, the more data you have to suss out interesting trends and insight. By running simple keyword searches, or visualizing the output of NER, you can tell what people, places, or themes are present in the documents. Check out the planned features for an overview of some common text processing techniques I'd like to build into it.
