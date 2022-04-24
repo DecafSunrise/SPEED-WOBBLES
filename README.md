@@ -27,7 +27,7 @@
 ## What if this can't grab a particular site's text?
 Run "Manually Fix Text.ipynb", and copy/paste the article text into the ipywidget. Continue running that cell until the errors are gone!
 
-## What about articles published before you started scraping?
+## What about articles published before you started scraping? (**Cold Start Problem**)
 There's a table (and helper script, Manually_Add_Links.ipynb) for submitting individual URLs to "catch up" on. This injects them into a "Manually_Added_Links" table and the RSS_Hits table, gives them a UUID, and kicks off further processing.
 
 ![image](https://user-images.githubusercontent.com/36832027/164998875-3173866a-aa83-4fd3-9cf4-df83506b0774.png)
@@ -40,6 +40,7 @@ The longer this thing runs and scrapes, the more data you have to suss out inter
   - Uses SpaCy's vanilla en_core_web_lg model presently
     - Could create a custom SpaCy NER model for this
   - Sentiment Analysis by entity ("Sent4Ent")
+    - Might necessitate some Entity Linking or Coreference Resolution to cluster different spellings/references of particular folks together, so you don't have a **vocabulary mismatch** problem.
 - Graph Analysis:
   - Which entities occur together in documents?
   - Which documents cover similar themes?
