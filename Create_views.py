@@ -1,5 +1,6 @@
 # https://www.sqlitetutorial.net/sqlite-create-view/
 
+print("\n\nCreating cleaned view...")
 import sqlite3
 
 name = 'Operation_Lonestar'
