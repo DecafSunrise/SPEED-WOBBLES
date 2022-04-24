@@ -72,10 +72,10 @@ con.close()
 now = datetime.utcnow()
 with open(fr"./Logs/Read_RSS_run_{str(now.strftime('%m_%d_%Y, %H_%M_%S'))}.txt", 'w') as f:
     f.write(str(now)+"\n")
-    f.write(f"Scraped {len(df)} links")
+    f.write(f"RSS feed identified {len(df)} links")
 
 print(f"Read {len(df)} links")
-print(f"Scraped {len(df_out)} new links")
+print(f"RSS feed identified {len(df_out)} new links")
 
 print("Done!")
 
