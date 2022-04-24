@@ -1,5 +1,5 @@
-beautifulsoup4==4.11.1
 boilerpy3==1.0.5
 pandas==1.3.5
 requests==2.27.1
+spacy==2.2.3
 tqdm==4.64.0
