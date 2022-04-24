@@ -107,9 +107,11 @@ FailCount = len(df[(df['Suitable'] == True) & (df['Failed_Scrape'] == True)])
 
 
 print("""\n\n/////     /////     /////\n\n""")
-
-print(f"{SuitableLen}/{TotalQueueLen} ({round((SuitableLen/TotalQueueLen)*100, 1)}%) of things in the queue are appropriate for scraping")
-print(f"{FailCount}/{SuitableLen} ({round((FailCount/SuitableLen)*100, 1)}%) failed Rate")
+try:
+    print(f"{SuitableLen}/{TotalQueueLen} ({round((SuitableLen/TotalQueueLen)*100, 1)}%) of things in the queue are appropriate for scraping")
+    print(f"{FailCount}/{SuitableLen} ({round((FailCount/SuitableLen)*100, 1)}%) failed Rate")
+except:
+    print("Queue length was zero...")
 
 ## Tests
 
