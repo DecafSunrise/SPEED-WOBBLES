@@ -1,4 +1,4 @@
-print("Running NER...")
+print("\n\nRunning NER...")
 
 import sqlite3
 from itertools import *
