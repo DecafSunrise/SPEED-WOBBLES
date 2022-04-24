@@ -13,7 +13,7 @@ nlp = spacy.load("en_core_web_lg")
 
 try:
     df = pd.read_sql_query(
-        "SELECT * from cleaned_table c LEFT JOIN NER_Vanilla_SpaCy n ON c.GUID = n.GUID WHERE TRUE AND n.GUID IS NULL",
+        "SELECT * from cleaned_table c LEFT JOIN NER_Vanilla_SpaCy n ON c.GUID = n.GUID WHERE TRUE AND n.GUID IS NULL AND c.Body is not 'Error'",
         con)
     df = df.loc[:, ~df.columns.duplicated()]
 except:
