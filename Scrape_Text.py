@@ -18,7 +18,7 @@ tqdm.pandas()
 
 extractor = extractors.ArticleExtractor()
 
-print("Scraping Text...")
+print("\n\nScraping Text...")
 
 name = 'Operation_Lonestar'
 con = sqlite3.connect(f"{name}_db.sqlite")
