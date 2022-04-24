@@ -46,6 +46,12 @@ con = sqlite3.connect(f"{name}_db.sqlite")
 df.to_sql("RSS_Hits", con, if_exists="append", index=False)
 
 con.close()
+
+now = datetime.utcnow()
+with open(fr"./Logs/Read_RSS_run_{str(now.strftime('%m_%d_%Y, %H_%M_%S'))}.txt", 'w') as f:
+    f.write(str(now)+"\n")
+    f.write(f"Scraped {len(df)} links")
+
 print("Done!")
 
 
