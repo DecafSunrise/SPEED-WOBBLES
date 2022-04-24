@@ -14,6 +14,7 @@ import sqlite3
 import re
 from datetime import datetime
 import uuid
+from urllib.parse import urlparse
 
 name = 'Operation_Lonestar'
 url = 'https://www.google.com/alerts/feeds/14966249695842301360/8191453454664689556'
@@ -40,7 +41,14 @@ def extractUrl(GALink):
     match = re.findall(r"(?:&url=)(.*)(?:&ct=)", GALink)
     return match[0]
 
+def getBaseURL(link):
+    t = urlparse(link).netloc
+    baseurl = '.'.join(t.split('.')[-2:])
+
+    return baseurl
+
 df['Link'] = df['Google_Link'].apply(extractUrl)
+df['Site'] = df['Link'].apply(getBaseURL)
 
 con = sqlite3.connect(f"{name}_db.sqlite")
 
