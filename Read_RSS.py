@@ -13,6 +13,7 @@ import pandas as pd
 import sqlite3
 import re
 from datetime import datetime
+import uuid
 
 name = 'Operation_Lonestar'
 url = 'https://www.google.com/alerts/feeds/14966249695842301360/8191453454664689556'
@@ -23,6 +24,7 @@ output = []
 for entry in soup.find_all('entry'):
 
     item = {
+        'GUID': str(uuid.uuid4()),
         'Title' : entry.find('title',{'type':'html'}).text,
         'Date_Published' : entry.find('published').text,
         'Date_Retrieved': str(datetime.utcnow()),
