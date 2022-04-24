@@ -18,7 +18,7 @@ tqdm.pandas()
 
 extractor = extractors.ArticleExtractor()
 
-print("\n\nScraping Text...")
+print("Scraping Text...")
 
 name = 'Operation_Lonestar'
 con = sqlite3.connect(f"{name}_db.sqlite")
@@ -35,7 +35,7 @@ except:
     df = pd.read_sql_query("SELECT * from RSS_Hits", con)
 
 
-print(f"Identified {len(df)} document(s) to scrape")
+print(f"\t>>Identified {len(df)} document(s) to scrape")
 
 
 def GetArticleContent(url):
@@ -106,7 +106,7 @@ SuitableLen = len(df[df['Suitable'] == True])
 FailCount = len(df[(df['Suitable'] == True) & (df['Failed_Scrape'] == True)])
 
 
-print("""\n\n/////     /////     /////\n\n""")
+# print("""\n\n/////     /////     /////\n\n""")
 
 
 ## Tests
@@ -128,15 +128,15 @@ now = datetime.utcnow()
 with open(fr"./Logs/Scrape_Text_run_{str(now.strftime('%m_%d_%Y, %H_%M_%S'))}.txt", 'w') as f:
     f.write(str(now)+"\n")
     try:
-        print(f"{SuitableLen}/{TotalQueueLen} ({round((SuitableLen / TotalQueueLen) * 100, 1)}%) of things in the queue are appropriate for scraping")
-        print(f"{FailCount}/{SuitableLen} ({round((FailCount / SuitableLen) * 100, 1)}%) failed Rate")
+        print(f"\t>>{SuitableLen}/{TotalQueueLen} ({round((SuitableLen / TotalQueueLen) * 100, 1)}%) of things in the queue are appropriate for scraping")
+        print(f"\t>>{FailCount}/{SuitableLen} ({round((FailCount / SuitableLen) * 100, 1)}%) failed Rate")
         f.write(f"{SuitableLen}/{TotalQueueLen} ({round((SuitableLen/TotalQueueLen)*100, 1)}%) of things in the queue are appropriate for scraping\n")
         f.write(f"{FailCount}/{SuitableLen} ({round((FailCount/SuitableLen)*100, 1)}%) failed Rate\n")
 
     except:
-        print("Queue length was zero, exiting...")
+        print("\t>>Queue length was zero, exiting...")
         f.write("Queue length was zero, exiting...")
 
 
-print("\n\nDone!")
+print("Done!")
 

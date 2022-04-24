@@ -1,6 +1,6 @@
 # https://www.sqlitetutorial.net/sqlite-create-view/
 
-print("\n\nCreating cleaned view...")
+print("Creating cleaned view...")
 import sqlite3
 
 name = 'Operation_Lonestar'
@@ -10,10 +10,10 @@ cur = con.cursor()
 
 cur.execute("SELECT name FROM sqlite_master WHERE type='view';")
 views = [x[0] for x in cur.fetchall()]
-print(views)
+# print(views)
 
 if not 'cleaned_table' in views:
-    print("\n\n Cleaned Table view not found, creating...")
+    print("\t>>Cleaned Table view not found, creating...")
     # Create table
     cur.execute('''CREATE VIEW cleaned_table
                     as
@@ -23,10 +23,10 @@ if not 'cleaned_table' in views:
     # Save (commit) the changes
     con.commit()
 else:
-    print("You've already got the Cleaned Table, skipping...")
+    print("\t>>You've already got the Cleaned Table, skipping...")
 
 # We can also close the connection if we are done with it.
 # Just be sure any changes have been committed or they will be lost.
 con.close()
 
-print("\n\n Done!")
+print("Done!")

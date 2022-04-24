@@ -1,4 +1,4 @@
-print("\n\nRunning NER...")
+print("Running NER...")
 
 import sqlite3
 from itertools import *
@@ -13,7 +13,7 @@ nlp = spacy.load("en_core_web_lg")
 
 try:
     df = pd.read_sql_query(
-        "SELECT * from cleaned_table c LEFT JOIN Vanilla_SpaCy_NER n ON c.GUID = n.GUID WHERE TRUE AND n.GUID IS NULL",
+        "SELECT * from cleaned_table c LEFT JOIN NER_Vanilla_SpaCy n ON c.GUID = n.GUID WHERE TRUE AND n.GUID IS NULL",
         con)
     df = df.loc[:, ~df.columns.duplicated()]
 except:
@@ -45,7 +45,7 @@ def splitEnts(dataframe):
     return dataframe
 
 if len(df)>0:
-    print(f"Found {len(df)} new articles for NER")
+    print(f"\t>>Found {len(df)} new articles for NER")
     df = addEnts(df, 'Body')
 
     results = list()
@@ -59,8 +59,8 @@ if len(df)>0:
 
     ner_df = pd.DataFrame(results, columns=['GUID', 'EntityType', 'Entity'])
 
-    ner_df.to_sql("Vanilla_SpaCy_NER", con, if_exists="append", index=False)
+    ner_df.to_sql("NER_Vanilla_SpaCy", con, if_exists="append", index=False)
 else:
-    print("No new articles to NER, skipping...")
+    print("\t>>No new articles to NER, skipping...")
 
-print("\n\n Done!")
+print("Done!")

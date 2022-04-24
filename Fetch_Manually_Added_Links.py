@@ -32,7 +32,7 @@ try:
     df_url = pd.read_sql_query("SELECT m.Link from Manually_Added_Links m LEFT JOIN RSS_Hits r ON m.Link = r.Link WHERE TRUE AND r.GUID IS NULL", con)
 
     # df_url
-    print(f"Found {len(df_url)} manually-added links to catch up on")
+    print(f"\t>>Found {len(df_url)} manually-added links to catch up on")
 
     df_url['GUID'] = [str(uuid.uuid4()) for x in range(len(df_url))]
 
@@ -49,7 +49,7 @@ try:
 
     df_url.to_sql("RSS_Hits", con, if_exists="append", index=False)
 except:
-    print("No Manual links to catch up on")
+    print("\t>>No Manual links to catch up on")
 
 
-print("\n\nDone!")
+print("Done!")
