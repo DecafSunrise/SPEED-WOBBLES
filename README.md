@@ -11,6 +11,11 @@
 ## How does this work?
 This collection of scripts looks at a **Google News RSS feed** to identify news articles of interest to you, on a given topic. Once it's found a new article, it scrapes the text to an SQLite database. The processing is idempotent, so you can run this every ~15 minutes and won't wind up with duplicate text in your database. Personally, I'm running it every 12 hours, but if you were to modify this to grab tweets you might want a lower periodicity.
 
+## Why Google News?
+- **Work smarter, not harder:** Writing your own scraper better than google sounds really, really hard.
+- **Only do what you have to:** Google Alerts lets you set up arbitrary RSS feeds, without you having to set up runners, cron jobs etc to identify content of interest.
+- **Extensibility:** You can set up multiple RSS feeds for multiple topics of interest, or different angles on a single topic. With some minor refactoring, these scripts can be set to run against many different Alerts, or even your favorite site's RSS feed. Neat.
+
 ## What if this can't grab a particular site's text?
 Run "Manually Fix Text.ipynb", and copy/paste the article text into the ipywidget. Continue running that cell until the errors are gone!
 
