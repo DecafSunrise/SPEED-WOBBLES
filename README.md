@@ -10,7 +10,7 @@
 - Run Data_pipeline.py
 - Now you've got a database... Happy Data Sciencein'
 
-![image](https://user-images.githubusercontent.com/36832027/164994372-298d994e-8030-4aa2-a181-8e9860ff31d1.png)
+![image](https://user-images.githubusercontent.com/36832027/165001835-bf57aca4-a254-4c7f-93f1-07cf0506c195.png)
 
 ## How does this work?
 - This collection of scripts looks at a **Google News RSS feed** to identify news articles of interest to you, on a given topic. 
