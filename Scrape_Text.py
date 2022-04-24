@@ -107,11 +107,7 @@ FailCount = len(df[(df['Suitable'] == True) & (df['Failed_Scrape'] == True)])
 
 
 print("""\n\n/////     /////     /////\n\n""")
-try:
-    print(f"{SuitableLen}/{TotalQueueLen} ({round((SuitableLen/TotalQueueLen)*100, 1)}%) of things in the queue are appropriate for scraping")
-    print(f"{FailCount}/{SuitableLen} ({round((FailCount/SuitableLen)*100, 1)}%) failed Rate")
-except:
-    print("Queue length was zero...")
+
 
 ## Tests
 
@@ -128,10 +124,19 @@ df_body_text = df[df['Failed_Scrape']==False][['GUID', 'Body']]
 df_body_text.to_sql("Body_Text", con, if_exists="append", index=False)
 
 now = datetime.utcnow()
+
 with open(fr"./Logs/Scrape_Text_run_{str(now.strftime('%m_%d_%Y, %H_%M_%S'))}.txt", 'w') as f:
     f.write(str(now)+"\n")
-    f.write(f"{SuitableLen}/{TotalQueueLen} ({round((SuitableLen/TotalQueueLen)*100, 1)}%) of things in the queue are appropriate for scraping\n")
-    f.write(f"{FailCount}/{SuitableLen} ({round((FailCount/SuitableLen)*100, 1)}%) failed Rate\n")
+    try:
+        print(f"{SuitableLen}/{TotalQueueLen} ({round((SuitableLen / TotalQueueLen) * 100, 1)}%) of things in the queue are appropriate for scraping")
+        print(f"{FailCount}/{SuitableLen} ({round((FailCount / SuitableLen) * 100, 1)}%) failed Rate")
+        f.write(f"{SuitableLen}/{TotalQueueLen} ({round((SuitableLen/TotalQueueLen)*100, 1)}%) of things in the queue are appropriate for scraping\n")
+        f.write(f"{FailCount}/{SuitableLen} ({round((FailCount/SuitableLen)*100, 1)}%) failed Rate\n")
+
+    except:
+        print("Queue length was zero, exiting...")
+        f.write("Queue length was zero, exiting...")
+
 
 print("\n\nDone!")
 
