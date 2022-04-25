@@ -20,7 +20,7 @@ if 'cleaned_table' not in views:
                         as
                        SELECT r.GUID, r.Date_Published, r.Link, r.Site, r.Title, 
                        b.Body, s.Subjectivity, s.Polarity from RSS_Hits r JOIN 
-                       Body_Text b on r.GUID = b.GUID JOIN Sentiment_TextBlob s on s.GUID = r.GUID;''')
+                       Body_Text b on r.GUID = b.GUID JOIN Sentiment_TextBlob s on s.GUID = r.GUID WHERE b.Body is not 'Error';''')
 
         # Save (commit) the changes
         con.commit()
@@ -28,7 +28,7 @@ if 'cleaned_table' not in views:
         cur.execute('''CREATE VIEW cleaned_table
                         as
                         SELECT r.GUID, r.Date_Published, r.Link, r.Site, r.Title, 
-                        b.Body from RSS_Hits r JOIN Body_Text b on r.GUID = b.GUID;''')
+                        b.Body from RSS_Hits r JOIN Body_Text b on r.GUID = b.GUID WHERE b.Body is not 'Error';''')
 
         # Save (commit) the changes
         con.commit()
@@ -48,7 +48,7 @@ else:
                         as
                        SELECT r.GUID, r.Date_Published, r.Link, r.Site, r.Title, 
                        b.Body, s.Subjectivity, s.Polarity from RSS_Hits r JOIN 
-                       Body_Text b on r.GUID = b.GUID JOIN Sentiment_TextBlob s on s.GUID = r.GUID;''')
+                       Body_Text b on r.GUID = b.GUID JOIN Sentiment_TextBlob s on s.GUID = r.GUID WHERE b.Body is not 'Error';''')
 
         # Save (commit) the changes
         con.commit()
