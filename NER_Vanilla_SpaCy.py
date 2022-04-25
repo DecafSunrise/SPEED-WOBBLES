@@ -10,7 +10,7 @@ con = sqlite3.connect(f"{name}_db.sqlite")
 
 spacy.prefer_gpu()
 nlp = spacy.load("en_core_web_lg")
-
+nlp.max_length = 1250000 # or higher
 try:
     df = pd.read_sql_query(
         "SELECT * from cleaned_table c LEFT JOIN NER_Vanilla_SpaCy n ON c.GUID = n.GUID WHERE TRUE AND n.GUID IS NULL AND c.Body is not 'Error'",
