@@ -128,3 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 /Operation_Lonestar_db.sqlite
+
+.idea/

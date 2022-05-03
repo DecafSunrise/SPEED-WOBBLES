@@ -6,7 +6,8 @@
 
 ## Getting Started
 - Clone this repo
-- install requirements.txt (pip install requirements.txt)
+- install requirements.txt
+  - ```pip install -r requirements.txt```
 - Run Data_pipeline.py
 - Now you've got a database... Happy Data Sciencein'
 
