@@ -1,7 +1,7 @@
 # https://www.sqlitetutorial.net/sqlite-create-view/
+import sqlite3
 
 print("Creating cleaned view...")
-import sqlite3
 
 name = 'Operation_Lonestar'
 con = sqlite3.connect(f"{name}_db.sqlite")
@@ -11,7 +11,7 @@ cur = con.cursor()
 cur.execute("SELECT name FROM sqlite_master WHERE type='view';")
 views = [x[0] for x in cur.fetchall()]
 # print(views)
-## Check to see if the cleaned view has sentiment scores
+# Check to see if the cleaned view has sentiment scores
 cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
 tables = [x[0] for x in cur.fetchall()]
 
@@ -25,10 +25,10 @@ sentiment_table = False
 if 'Sentiment_TextBlob' in tables:
     sentiment_table = True
 
-if 'cleaned_table' ==False:
+if not 'cleaned_table':
     print("\t>>Cleaned Table view not found, creating...")
     # Create table
-    if sentiment_table==True:
+    if sentiment_table:
         try:
             cur.execute('''CREATE VIEW cleaned_table
                             as
@@ -38,7 +38,7 @@ if 'cleaned_table' ==False:
 
             # Save (commit) the changes
             con.commit()
-        except:
+        except Exception as e:
             cur.execute('''CREATE VIEW cleaned_table
                             as
                             SELECT r.GUID, r.Date_Published, r.Link, r.Site, r.Title, 

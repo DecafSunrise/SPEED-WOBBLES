@@ -1,4 +1,7 @@
-# import subprocess
+# TODO: 1. Verify functionality following reformat
+# TODO: 2. Implement logging
+# TODO: 3. Move helper functions/utils to dedicated file
+# TODO: 4. Implement threading
 
 print("\nStage 0:")
 exec(open("Fetch_Manually_Added_Links.py").read())

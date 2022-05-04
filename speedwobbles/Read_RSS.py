@@ -1,5 +1,15 @@
 #!/usr/bin/env python
-# coding: utf-8
+# encoding: utf-8
+
+import pandas as pd
+import re
+import requests
+import sqlite3
+import uuid
+
+from bs4 import BeautifulSoup
+from datetime import datetime
+from urllib.parse import urlparse
 
 # - https://stackoverflow.com/questions/70770541/how-to-parse-data-from-google-alerts-using-scrapy-in-python
 # - https://www.simplified.guide/scrapy/scrape-rss
@@ -7,37 +17,29 @@
 
 print("Reading RSS feed...")
 
-import requests
-from bs4 import BeautifulSoup
-import pandas as pd
-import sqlite3
-import re
-from datetime import datetime
-import uuid
-from urllib.parse import urlparse
-
 name = 'Operation_Lonestar'
 con = sqlite3.connect(f"{name}_db.sqlite")
 
 url = 'https://www.google.com/alerts/feeds/14966249695842301360/8191453454664689556'
 resp = requests.get(url)
-soup = BeautifulSoup(resp.text,'html.parser')
+soup = BeautifulSoup(resp.text, 'html.parser')
 
 try:
     df_existing = pd.read_sql_query("SELECT * from RSS_Hits", con)
-except:
+except Exception as e:
+    print(e.with_traceback())
     df_existing = pd.DataFrame(columns=['GUID', 'Title', 'Date_Published', 'Date_Retrieved', 'Excerpt',
-       'Google_Link', 'Link', 'Site'])
+                                        'Google_Link', 'Link', 'Site'])
 
 output = []
 for entry in soup.find_all('entry'):
 
     item = {
-        'Title' : entry.find('title',{'type':'html'}).text,
-        'Date_Published' : entry.find('published').text,
+        'Title': entry.find('title', {'type': 'html'}).text,
+        'Date_Published': entry.find('published').text,
         'Date_Retrieved': str(datetime.utcnow()),
-        'Excerpt' : entry.find('content').text,
-        'Google_Link' : entry.find('link')['href'],
+        'Excerpt': entry.find('content').text,
+        'Google_Link': entry.find('link')['href'],
     }
 
     output.append(item)
@@ -45,23 +47,26 @@ for entry in soup.find_all('entry'):
 df = pd.DataFrame(output)
 df['GUID'] = [str(uuid.uuid4()) for x in range(len(df))]
 
-def extractUrl(GALink):
+
+def extract_url(GALink):
     match = re.findall(r"(?:&url=)(.*)(?:&ct=)", GALink)
     return match[0]
 
-def getBaseURL(link):
+
+def get_base_url(link):
     t = urlparse(link).netloc
     baseurl = '.'.join(t.split('.')[-2:])
 
     return baseurl
 
-df['Link'] = df['Google_Link'].apply(extractUrl)
-df['Site'] = df['Link'].apply(getBaseURL)
+
+df['Link'] = df['Google_Link'].apply(extract_url)
+df['Site'] = df['Link'].apply(get_base_url)
 # df['Hash'] = df[['Title', 'Excerpt', 'Google_Link', 'Link']].apply(lambda x: hash(tuple(x)), axis = 1)
 
 
 # Compare the links, only write the new stuff
-old_links= df_existing['Link'].tolist()
+old_links = df_existing['Link'].tolist()
 df_out = df[~df['Link'].isin(old_links)]
 
 # Write the new DataFrame to a new SQLite table
@@ -78,6 +83,3 @@ print(f"\t>>Read {len(df)} links")
 print(f"\t>>RSS feed identified {len(df_out)} new links")
 
 print("Done!")
-
-
-

@@ -1,12 +1,14 @@
-print("Running Sentiment Analysis...")
+import pandas as pd
+import sqlite3
 
 from textblob import TextBlob
-import sqlite3
-import pandas as pd
+
+print("Running Sentiment Analysis...")
 name = 'Operation_Lonestar'
 con = sqlite3.connect(f"{name}_db.sqlite")
 
-def get_Sentiment(text):
+
+def get_sentiment(text):
     blob = TextBlob(text)
     sents = []
     polarities = []
@@ -18,24 +20,27 @@ def get_Sentiment(text):
 
     return sents, polarities, subjectivities
 
+
 def avg(mylist):
     return sum(mylist)/len(mylist)
 
 
 def process_article(text):
-    sents, polarities, subjectivities = get_Sentiment(text)
+    sents, polarities, subjectivities = get_sentiment(text)
 
     return avg(polarities), avg(subjectivities)
+
 
 try:
     df = pd.read_sql_query(
         "SELECT * from cleaned_table c LEFT JOIN Sentiment_TextBlob s ON c.GUID = s.GUID WHERE TRUE AND s.GUID IS NULL AND c.Body is not 'Error'",
         con)
     df = df.loc[:, ~df.columns.duplicated()]
-except:
+except Exception as e:
     df = pd.read_sql_query("SELECT * from cleaned_table", con)
 
-if len(df)>0:
+
+if len(df) > 0:
     print(f"\t>>Found {len(df)} articles for Sentiment Analysis...")
 
     a = df['Body'].apply(process_article)
